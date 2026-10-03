@@ -1,6 +1,6 @@
 [package]
 name = "kanjilearn"
-version = "1.0.3"
+version = "1.0.4"
 description = "Kanji Study - hiragana, katakana and JLPT N5-N1 kanji, offline"
 authors = ["Kanji Study"]
 edition = "2021"
