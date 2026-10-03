@@ -158,7 +158,7 @@ the whole web app:
 ```bash
 python - <<'PY'
 import re, zipfile
-with zipfile.ZipFile('dist-android/KanjiStudy-1.0.3-arm64-v8a-signed.apk') as z:
+with zipfile.ZipFile('dist-android/KanjiStudy-1.0.4-arm64-v8a-signed.apk') as z:
     so = z.read('lib/arm64-v8a/libkanjilearn_lib.so')
 paths = sorted({p.decode() for p in re.findall(rb'(?:index\.html|styles\.css|app\.js|js/[\w./-]+|data/[\w./-]+)', so)})
 print(len(paths), 'embedded files')
