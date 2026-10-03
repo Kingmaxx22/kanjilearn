@@ -14,6 +14,30 @@ why it is a webview rather than a folder of HTML.
 Everything travels inside the APK: 2381 kanji across N5–N1, 163 kana, the 2.17 MB
 draw-to-search index, and all the data bundles. There are no loose asset files.
 
+## Running it on an emulator
+
+Worth doing before a real device — it is where the WebView differences show up.
+The APK has to match the emulator's ABI: an `x86_64` system image needs an
+`x86_64` build, not the arm64 one this project ships.
+
+```bash
+sdkmanager "system-images;android-36;default;x86_64"     # ~1.4 GB
+echo no | avdmanager create avd -n kanjitest \
+    -k "system-images;android-36;default;x86_64" --force
+
+cargo tauri android build --apk --target x86_64
+# sign as tools/build-android.sh does, then:
+adb install -r <signed apk>
+
+emulator -avd kanjitest -no-window -no-audio -no-snapshot \
+         -gpu swiftshader_indirect
+adb shell wm size 1080x2280 && adb shell wm density 420   # a phone-sized screen
+```
+
+Software rendering makes the recognition index take a minute or two instead of
+seconds, and SystemUI throws an occasional "isn't responding" dialog. Neither
+is the app misbehaving.
+
 ## Prerequisites
 
 Windows, macOS or Linux all work — Gradle builds from any host.
@@ -165,8 +189,22 @@ dist-android/           signed APKs, gitignored
 the Android Studio project — not build output, and its own `.gitignore` drops
 the Gradle build directories and the `.so` that gets linked in.
 
-## Still to do
+## Verified
 
-Nothing is verified on a physical device yet: the APK is built, signed and
-checked as an archive, but it has not been launched on Android. The first run on
-a phone is the real test.
+Checked on an Android 16 (API 36) emulator, x86_64, at 1080x2280 / 420 dpi:
+
+- launches from the launcher icon, which is the app's own 字 mark
+- all five tabs render; the grid, level counts and meanings are correct
+- kanji detail: stroke player with all six controls, 4/4 counter, readings
+- **Draw to search builds the whole 2539-character index in a Web Worker** —
+  module workers are the main thing that could have failed on a different
+  WebView, and it does not
+- drawing on the pad is recognised: two strokes for a rough 十 came back as
+  止 / 氷 / 水 / 十 with levels and confidences
+- Learn to write: picker, kana practice page, stroke order autoplays on open
+  (reaches 3 / 3 unprompted), trace pad and ghost render
+- no JavaScript errors and no crashes in logcat across the whole session
+
+Still untested: a physical device. The emulator's WebView is Chromium, but a
+real phone's WebView version comes from the system and can be older, and touch
+input on a real screen is not the same as an injected swipe.
