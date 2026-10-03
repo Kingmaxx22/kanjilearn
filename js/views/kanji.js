@@ -130,7 +130,10 @@ async function renderDetail(level, char, mount) {
 
   mount.appendChild(el('div', { className: 'row', style: { marginTop: '16px' } },
     markBtn,
-    el('a', { className: 'btn', href: `#/draw/${encodeURIComponent(k.c)}` }, 'Practise drawing'),
+    // Practising means watching the stroke order and tracing it, which is what
+    // Learn to write is for. Draw to search is a different tool: it recognises
+    // anything you scribble and is reachable from its own tab.
+    el('a', { className: 'btn', href: `#/learn/${lv}/${encodeURIComponent(k.c)}` }, 'Practise drawing'),
     el('a', { className: 'btn', href: `#/study/${encodeURIComponent(k.c)}` }, 'Quiz me on this')));
 
   /* -- how it is read in practice -- */

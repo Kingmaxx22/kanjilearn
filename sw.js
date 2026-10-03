@@ -4,7 +4,7 @@
 // are fetched (cache-first), because they are large, versioned by build and
 // never change within a session.
 
-const VERSION = 'v6';
+const VERSION = 'v7';
 const SHELL_CACHE = `kanji-shell-${VERSION}`;
 const DATA_CACHE = `kanji-data-${VERSION}`;
 
