@@ -20,6 +20,9 @@ Windows desktop app (see [DESKTOP.md](DESKTOP.md)).
 
 - **Kana** — chart and per-character detail: stroke order animation, readings,
   words that use the character.
+- **Learn** — a grid of every character that has stroke data. Pick one to watch
+  its stroke order animate, step through it a stroke at a time, then trace it on
+  a pad that scores the attempt against the character.
 - **Kanji** — grid per level, and a detail page with stroke order, grade, stroke
   count, radical, frequency, on/kun and nanori readings, every meaning, and the
   words it actually appears in, each with per-kanji **furigana** and a gloss.
@@ -123,10 +126,11 @@ js/
   store.js          data loading and progress persistence
   recognizer.js     stroke template index and matching
   recognizer.worker.js  builds the index off the main thread
+  pad.js            the shared practice pad: grid, pen, ghost, rasterising
   strokes.js        stroke path parsing and glyph rendering
   furigana.js       ruby annotation
   util.js           DOM and localStorage helpers
-  views/            kanji.js, kana.js, draw.js, study.js
+  views/            kanji.js, kana.js, learn.js, draw.js, study.js
 tools/
   build-data.mjs    cache/ -> data/
   verify.mjs        post-build checks
@@ -158,6 +162,15 @@ usable: 日, 学 and 大 are all tagged `4`, and most N1 kanji carry no tag at a
 index (kanji from their KanjiVG stroke outlines, kana from filled glyph
 outlines). A drawn stroke is normalised, then scored against every template in a
 Web Worker, and candidates come back ranked.
+
+**The same measurement scores tracing.** The Learn tab builds an index for the
+one character being practised, which takes milliseconds rather than the seconds
+the full index needs, and compares the drawing against it. The pass marks are
+measured rather than guessed: a kanji traced correctly scores 84–97% and its
+lookalikes score 47–60%, so the mark sits at 72%. Kana sit lower (68–74% for a
+correct trace, 44–55% for the wrong one) because the kana template is the
+character's filled brush outline while a trace is drawn with a fixed-width pen,
+so the mark there is 60%.
 
 ## Attribution
 

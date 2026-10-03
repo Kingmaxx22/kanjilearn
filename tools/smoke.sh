@@ -46,6 +46,11 @@ ROUTES=(
   "kana-detail-kata:/kana/kata/%E3%83%90"
   "draw:/draw"
   "draw-with-ghost:/draw/%E6%97%A5"
+  "learn:/learn"
+  "learn-kana:/learn/hira"
+  "learn-kanji:/learn/n5"
+  "learn-practice:/learn/n5/%E6%97%A5"
+  "learn-kana-practice:/learn/hira/%E3%81%82"
   "study:/study"
   "study-single:/study/%E6%97%A5"
 )
@@ -64,6 +69,11 @@ MARKERS=(
   "kana-detail-kata|/kana/kata/%E3%83%90|4 / 4"
   "draw|/draw|Draw to search"
   "draw-with-ghost|/draw/%E6%97%A5|glyph-stage"
+  "learn|/learn|Learn to write"
+  "learn-kana|/learn/hira|learn-cell"
+  "learn-kanji|/learn/n5|learn-cell"
+  "learn-practice|/learn/n5/%E6%97%A5|Now trace it"
+  "learn-kana-practice|/learn/hira/%E3%81%82|Now trace it"
   "study|/study|Start session"
   "study-single|/study/%E6%97%A5|Start session"
 )

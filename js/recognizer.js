@@ -221,11 +221,15 @@ export function createMatcher(index) {
         xor += popcount(a ^ b);
         both += popcount(a & b);
       }
-      const tInk = qInk + xor - both;   // |a union b|
+      // |a union b| == xor + both. Deriving it as qInk + xor - both instead
+      // divides a small error by a small number when the two bitmaps nearly
+      // agree: a trace that is 96% correct came out as a 67% mismatch, because
+      // the denominator collapsed towards zero just as the numerator did.
+      const union = xor + both;
 
       // 1 - intersection-over-union, which stays sane when one side has far
       // more ink than the other.
-      const shape = xor / Math.max(1, tInk);
+      const shape = xor / Math.max(1, union);
 
       const hb = t * HIST_BINS;
       let histDiff = 0;

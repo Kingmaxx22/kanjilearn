@@ -4,7 +4,7 @@
 // are fetched (cache-first), because they are large, versioned by build and
 // never change within a session.
 
-const VERSION = 'v4';
+const VERSION = 'v5';
 const SHELL_CACHE = `kanji-shell-${VERSION}`;
 const DATA_CACHE = `kanji-data-${VERSION}`;
 
@@ -18,12 +18,14 @@ const SHELL = [
   './icon-maskable.svg',
   './js/util.js',
   './js/store.js',
+  './js/pad.js',
   './js/furigana.js',
   './js/strokes.js',
   './js/recognizer.js',
   './js/recognizer.worker.js',
   './js/views/kanji.js',
   './js/views/kana.js',
+  './js/views/learn.js',
   './js/views/draw.js',
   './js/views/study.js',
   './data/index.json',

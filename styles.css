@@ -111,6 +111,15 @@ button {
 .tabs a:hover { background: var(--bg-sunk); color: var(--ink); }
 .tabs a[aria-current="page"] { background: var(--accent-soft); color: var(--accent-ink); }
 
+/* Five tabs plus the wordmark stop fitting on a phone. Dropping the wordmark
+   and tightening the tabs keeps every tab reachable instead of letting the row
+   overflow and clip the theme button. */
+@media (max-width: 620px) {
+  .topbar { gap: 8px; }
+  .brand-text { display: none; }
+  .tabs a { padding: 7px 10px; font-size: 13.5px; }
+}
+
 .icon-btn {
   width: 34px; height: 34px;
   display: grid; place-items: center;
@@ -541,6 +550,15 @@ rt {
 
 .pad-wrap { position: relative; }
 
+/* The tracing guide sits over the pad, so it has to be taken out of the flow
+   and must not eat pointer events meant for the canvas. */
+.pad-ghost {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: transparent;
+}
+
 .pad {
   display: block;
   width: 100%;
@@ -606,6 +624,105 @@ rt {
 
 .bar { height: 4px; border-radius: 2px; background: var(--bg-sunk); overflow: hidden; margin-top: 7px; }
 .bar span { display: block; height: 100%; background: var(--accent); transition: width .2s; }
+
+/* ---- learn ---------------------------------------------------------- */
+
+.learn-bar { margin: 16px 0 4px; align-items: flex-end; }
+
+.learn-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.learn-cell {
+  position: relative;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--card);
+  transition: transform .15s, border-color .15s;
+}
+
+.learn-cell:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.learn-cell .ch {
+  font-family: var(--japanese);
+  font-size: 28px;
+  line-height: 1;
+}
+
+.learn-cell .n {
+  position: absolute;
+  right: 5px;
+  bottom: 3px;
+  font-family: var(--ui);
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--ink-faint);
+}
+
+.learn-cell.done { border-color: color-mix(in srgb, var(--good) 55%, var(--line)); }
+.learn-cell.done::after {
+  content: "";
+  position: absolute;
+  top: 5px; left: 5px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--good);
+}
+
+.learn-title {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 10px;
+  font-size: 30px;
+}
+
+.learn-title .reading {
+  font-family: var(--ui);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.learn-done {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--good);
+}
+
+.verdict {
+  margin-top: 11px;
+  padding: 11px 13px;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.verdict .pct {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.verdict.pass {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--good) 55%, var(--line));
+  background: color-mix(in srgb, var(--good) 9%, transparent);
+  color: var(--ink);
+}
+
+.verdict.pass .pct { color: var(--good); }
+.verdict.near .pct { color: var(--warn); }
 
 /* ---- study ---------------------------------------------------------- */
 

@@ -5,6 +5,7 @@ import { data } from './js/store.js';
 
 import * as kanjiView from './js/views/kanji.js';
 import * as kanaView from './js/views/kana.js';
+import * as learnView from './js/views/learn.js';
 import * as drawView from './js/views/draw.js';
 import * as studyView from './js/views/study.js';
 
@@ -33,6 +34,7 @@ document.getElementById('theme-toggle').addEventListener('click', () => {
 const ROUTES = {
   kanji: kanjiView,
   kana: kanaView,
+  learn: learnView,
   draw: drawView,
   study: studyView,
 };

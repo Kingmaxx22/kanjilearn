@@ -119,3 +119,37 @@ export const progress = {
     local.set('progress', {});
   },
 };
+
+/* ---- traced characters ---------------------------------------------- */
+
+/**
+ * Separate from study progress: this records that a character has been traced
+ * on the Learn pad, and the best match score reached doing it. Keeping it apart
+ * means practising your handwriting never touches the spaced-repetition boxes.
+ */
+export const learned = {
+  all() {
+    return local.get('learned', {});
+  },
+
+  get(ch) {
+    return this.all()[ch] || null;
+  },
+
+  has(ch) {
+    return !!this.get(ch);
+  },
+
+  /** Called with a match percentage; only a better score replaces the old one. */
+  mark(ch, pct) {
+    const map = this.all();
+    const prev = map[ch] || { best: 0, seen: 0 };
+    map[ch] = { best: Math.max(prev.best || 0, pct), seen: (prev.seen || 0) + 1 };
+    local.set('learned', map);
+    return map[ch];
+  },
+
+  reset() {
+    local.set('learned', {});
+  },
+};
