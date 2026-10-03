@@ -6,7 +6,8 @@ pad that recognises a character you sketch.
 
 It is a static site — no framework, no bundler, no npm dependencies. Plain ES
 modules, plain CSS, one service worker. The same files also compile into a native
-Windows desktop app (see [DESKTOP.md](DESKTOP.md)).
+Windows desktop app (see [DESKTOP.md](DESKTOP.md)) and an Android APK (see
+[ANDROID.md](ANDROID.md)).
 
 | | |
 | --- | --- |
@@ -115,6 +116,19 @@ cargo install tauri-cli --version "^2" --locked   # only needed for the installe
 Requires Rust (MSVC target), Visual Studio 2022 build tools, WebView2, Node and
 Python.
 
+## Android app
+
+`./tools/build-android.sh` produces a signed arm64 APK (~7.9 MB) with the same
+embedded assets. Toolchain, signing and install instructions are in
+[ANDROID.md](ANDROID.md).
+
+```bash
+./tools/build-android.sh
+adb install -r dist-android/KanjiStudy-<version>-arm64-v8a-signed.apk
+```
+
+Requires the Android SDK, an NDK, a JDK and the Android Rust targets.
+
 ## Layout
 
 ```
@@ -137,12 +151,16 @@ tools/
   smoke.sh          headless route smoke test
   verify-desktop.mjs  end-to-end checks against the packaged app
   build-desktop.sh  icons -> data -> verify -> compile -> bundle
+  build-android.sh  data -> generate -> compile -> sign
   launch-debug.sh   run the exe with remote debugging on
   app-icon.mjs, make-ico.py  icon generation
   lib/              parsers, aligner, reading mining
 src-tauri/          Tauri shell (Cargo.lock is committed on purpose)
+  gen/android/      the Android Studio project, also committed
 data/               generated, gitignored
 cache/              downloaded datasets, gitignored
+.keys/              Android signing key, gitignored
+dist-android/       built APKs, gitignored
 ```
 
 ## How it works

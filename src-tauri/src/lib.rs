@@ -11,6 +11,10 @@
 #[cfg(debug_assertions)]
 use tauri::Manager;
 
+// On Android and iOS the same builder is entered through the JNI entry point
+// rather than from main(), so this attribute is what makes the identical shell
+// work on a phone. It expands to nothing on desktop.
+#[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .setup(|_app| {

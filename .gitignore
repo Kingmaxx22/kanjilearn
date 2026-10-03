@@ -17,12 +17,26 @@ graphify-out/
 # file is committed and the shipped binary is built from pinned dependencies.
 src-tauri/target/
 src-tauri/web/
-src-tauri/gen/
+# Only the capability schemas under src-tauri/gen are generated; the Android
+# project next to them is source and is tracked (see ANDROID.md).
+src-tauri/gen/schemas/
+
+# Signing key for the Android APK, and the built APKs. The keystore has to
+# survive between releases or Android will refuse to update the installed app,
+# so keep it somewhere safe *outside* git -- see ANDROID.md.
+.keys/
+dist-android/
 
 # Icon sources rendered by tools/app-icon.mjs.
 build/
 icon.ico
 icon.png
+
+# The icon set `cargo tauri icon` writes. The Windows bundle uses icon.ico and
+# icon.png at the repo root (see tauri.conf.json), and Android uses the mipmaps
+# committed under src-tauri/gen/android/app/src/main/res, so this copy is
+# redundant for both.
+src-tauri/icons/
 
 node_modules/
 .DS_Store
