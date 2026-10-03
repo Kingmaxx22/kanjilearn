@@ -1,0 +1,30 @@
+# Raw datasets. Download them yourself (see the "Datasets" section of README.md);
+# tools/build-data.mjs only reads what is already here. Large, and reproducible.
+cache/
+
+# Generated bundles. Rebuild with `node tools/build-data.mjs`.
+data/
+
+# Installed agent skills and graphify output.
+.agents/
+.claude/
+graphify-out/
+
+# Desktop shell (Tauri). Rust build output and the staged copy of the web app
+# are generated; the crate source itself is tracked.
+#
+# Cargo.lock is deliberately NOT ignored: this is an application, so the lock
+# file is committed and the shipped binary is built from pinned dependencies.
+src-tauri/target/
+src-tauri/web/
+src-tauri/gen/
+
+# Icon sources rendered by tools/app-icon.mjs.
+build/
+icon.ico
+icon.png
+
+node_modules/
+.DS_Store
+Thumbs.db
+*.log

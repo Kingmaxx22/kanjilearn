@@ -1,0 +1,27 @@
+[package]
+name = "kanjilearn"
+version = "1.0.0"
+description = "Kanji Study - hiragana, katakana and JLPT N5-N1 kanji, offline"
+authors = ["Kanji Study"]
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "kanjilearn_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2.12", features = [] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# The whole app is local files; nothing is fetched at runtime.
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true

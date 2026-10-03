@@ -1,0 +1,26 @@
+{
+  "name": "Kanji Study — N5 to N1",
+  "short_name": "Kanji",
+  "description": "Learn hiragana, katakana and JLPT N5-N1 kanji: stroke order, readings, furigana, and how each kanji is actually read in real words.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f7f4ee",
+  "theme_color": "#f7f4ee",
+  "categories": ["education"],
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

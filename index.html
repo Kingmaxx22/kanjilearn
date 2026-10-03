@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kanji Study</title>
+<meta name="description" content="Learn hiragana, katakana and JLPT N5-N1 kanji: stroke order, readings, furigana and how each kanji is actually read.">
+<meta name="theme-color" content="#f7f4ee">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#/">
+    <span class="brand-mark">字</span>
+    <span class="brand-text">Kanji Study</span>
+  </a>
+  <nav class="tabs" id="tabs">
+    <a href="#/kana" data-tab="kana">Kana</a>
+    <a href="#/kanji" data-tab="kanji">Kanji</a>
+    <a href="#/draw" data-tab="draw">Draw</a>
+    <a href="#/study" data-tab="study">Study</a>
+  </nav>
+  <button class="icon-btn" id="theme-toggle" title="Switch theme" aria-label="Switch theme">◐</button>
+</header>
+
+<main id="view" class="view"><div class="loading">Loading…</div></main>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
