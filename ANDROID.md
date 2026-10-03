@@ -65,6 +65,14 @@ export NDK_HOME="$ANDROID_HOME/ndk/27.0.12077973"
 export JAVA_HOME="/c/Program Files/Android/Android Studio/jbr"
 ```
 
+Gradle's user home — the downloaded distribution, the Android Gradle plugin and
+the Kotlin jars, a few GB — defaults to `~/.gradle` on C. Point it at another
+drive if C is tight:
+
+```bash
+export GRADLE_USER_HOME="D:/GradleCache"   # a Windows path: Gradle is a Windows process here
+```
+
 If `NDK_HOME` is unset the script uses the newest NDK under `$ANDROID_HOME/ndk`.
 With no `JAVA_HOME` it uses Android Studio's bundled runtime, else `java` from
 `PATH`.
@@ -101,7 +109,8 @@ path and the `adb install` command to go with it.
 
 The first build is slow — it downloads the Gradle distribution, the Android
 Gradle plugin and the NDK's dependencies. Later builds reuse the Gradle cache
-and take a couple of minutes.
+and take a couple of minutes. That cache is `$GRADLE_USER_HOME` (see above), so
+the first build after moving it re-downloads everything.
 
 ## Signing
 
