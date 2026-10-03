@@ -124,9 +124,11 @@ async function renderPractice(scope, char, mount) {
 
   const stage = el('div', { className: 'glyph-stage' });
   const playerBox = el('div', { className: 'player-host' });
+  // Opening a character plays its stroke order straight away: the point of the
+  // page is to watch how it is written before tracing it.
   const player = isKana
-    ? kanaGlyph(stage, entry.markup)
-    : kanjiGlyph(stage, entry.paths, { grid: true });
+    ? kanaGlyph(stage, entry.markup, { autoplay: true })
+    : kanjiGlyph(stage, entry.paths, { grid: true, autoplay: true });
 
   // A player with nothing to play (a kana with no stroke data) leaves an empty
   // control bar behind, which reads as a broken button row.

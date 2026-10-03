@@ -111,13 +111,27 @@ button {
 .tabs a:hover { background: var(--bg-sunk); color: var(--ink); }
 .tabs a[aria-current="page"] { background: var(--accent-soft); color: var(--accent-ink); }
 
-/* Five tabs plus the wordmark stop fitting on a phone. Dropping the wordmark
-   and tightening the tabs keeps every tab reachable instead of letting the row
-   overflow and clip the theme button. */
-@media (max-width: 620px) {
-  .topbar { gap: 8px; }
+/* The tabs are named in full ("Learn to write", "Draw to search"), which stops
+   fitting beside the wordmark on a phone. Rather than squeezing the row until
+   the theme button is clipped, the tabs drop to a line of their own and scroll
+   sideways if even that is too narrow. */
+@media (max-width: 700px) {
+  .topbar { flex-wrap: wrap; gap: 8px; padding-bottom: 8px; }
+  .tabs {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tabs a { flex: none; }
+  .icon-btn { margin-left: auto; }
+}
+
+@media (max-width: 460px) {
   .brand-text { display: none; }
-  .tabs a { padding: 7px 10px; font-size: 13.5px; }
+  .tabs a { padding: 7px 11px; font-size: 13px; }
 }
 
 .icon-btn {

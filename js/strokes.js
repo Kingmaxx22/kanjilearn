@@ -65,7 +65,7 @@ export function strokePlayer(container, { speed = 1, onState = null, dot = null 
       position = 0;
       paint();
     },
-    play: () => { if (!playing) { playing = true; btnPlay.textContent = '❚❚'; step(); } },
+    play: () => { if (!playing) { playing = true; setPlayLabel(true); step(); } },
     pause,
     seek,
     step: () => seek(Math.floor(position) + 1),
@@ -86,9 +86,19 @@ export function strokePlayer(container, { speed = 1, onState = null, dot = null 
 
   function pause() {
     playing = false;
-    btnPlay.textContent = '▶';
+    setPlayLabel(false);
     if (raf) cancelAnimationFrame(raf);
     raf = null;
+  }
+
+  // The label has to follow the state, otherwise it still reads "Play" to a
+  // screen reader while the animation is running.
+  function setPlayLabel(isPlaying) {
+    const label = isPlaying ? '❚❚' : '▶';
+    const name = isPlaying ? 'Pause' : 'Play';
+    btnPlay.textContent = label;
+    btnPlay.title = name;
+    btnPlay.setAttribute('aria-label', name);
   }
 
   // ~700ms per stroke at 1x, which is roughly how fast the character is written.
@@ -181,7 +191,7 @@ export function strokePlayer(container, { speed = 1, onState = null, dot = null 
  * Render KanjiVG stroke paths with a practice grid and a player.
  * Returns the player plus the stage element.
  */
-export function kanjiGlyph(stage, paths, { grid = true } = {}) {
+export function kanjiGlyph(stage, paths, { grid = true, autoplay = false } = {}) {
   clear(stage);
 
   const svg = document.createElementNS(SVG_NS, 'svg');
@@ -233,6 +243,9 @@ export function kanjiGlyph(stage, paths, { grid = true } = {}) {
   const player = strokePlayer(stage, { dot });
   player.load(elements);
   player.showAll();
+  // The Learn tab wants to watch it being written, so it opens from the first
+  // stroke rather than showing the finished character.
+  if (autoplay) { player.reset(); player.play(); }
 
   return player;
 }
@@ -247,7 +260,7 @@ let kanaUid = 0;
  * Ids are rewritten per instance because several kana can be on screen at once
  * and the clip paths reference ids in the "shadows" group.
  */
-export function kanaGlyph(stage, markup, { ghost = true } = {}) {
+export function kanaGlyph(stage, markup, { ghost = true, autoplay = false } = {}) {
   clear(stage);
 
   const uid = `k${++kanaUid}`;
@@ -294,6 +307,7 @@ export function kanaGlyph(stage, markup, { ghost = true } = {}) {
   const player = strokePlayer(stage);
   player.load(elements);
   player.showAll();
+  if (autoplay) { player.reset(); player.play(); }
 
   return player;
 }
